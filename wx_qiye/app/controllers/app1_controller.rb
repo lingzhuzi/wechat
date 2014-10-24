@@ -20,10 +20,15 @@ logger.debug "----> encrypt_message: #{encrypt_message}"
   private
 
   def wx_crypt
-    wx_id            = 'wxfe78d21152356457'
-    token            = 'yunfis1'
-    encoding_aes_key = 'qz2OCpKui4rkYxGHraC2czyZgmANLwrOodvIfztlSMd'
-    @wx_crypt         = WxCrypt.new(token, encoding_aes_key, wx_id)
+    file = File.open(Rails.root + "config/qiye_apps.yml", 'r')
+    data = YAML.load(file)
+    app  = data['app1']
+
+    token   = app['token']
+    wx_id   = app['wx_id']
+    aes_key = app['encoding_aes_key']
+
+    @wx_crypt         = WxCrypt.new(token, aes_key, wx_id)
   end
 
   def verify_url
