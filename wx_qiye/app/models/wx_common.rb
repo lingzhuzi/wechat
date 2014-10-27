@@ -11,7 +11,7 @@ class WxCommon
       xml_message = wx_crypt.decrypt_message(signature, timestamp, nonce, post_data)
       message     = Hash.from_xml(xml_message)
 
-      return message
+      return message['xml']
     end
   end
 end
