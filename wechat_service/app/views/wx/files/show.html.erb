@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>File name:</strong>
+  <%= @wx_file.file_name %>
+</p>
+
+<p>
+  <strong>File size:</strong>
+  <%= @wx_file.file_size %>
+</p>
+
+<p>
+  <strong>Mime type:</strong>
+  <%= @wx_file.mime_type %>
+</p>
+
+<p>
+  <strong>Digest:</strong>
+  <%= @wx_file.digest %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @wx_file.description %>
+</p>
+
+<%= link_to 'Edit', edit_wx_file_path(@wx_file) %> |
+<%= link_to 'Back', wx_files_path %>

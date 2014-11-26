@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  icon_id: 
+  wx_id: MyString
+  app_id: MyString
+  sceret: MyText
+
+two:
+  name: MyString
+  icon_id: 
+  wx_id: MyString
+  app_id: MyString
+  sceret: MyText

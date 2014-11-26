@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @wx_app.name %>
+</p>
+
+<p>
+  <strong>Icon:</strong>
+  <%= @wx_app.icon %>
+</p>
+
+<p>
+  <strong>Wx:</strong>
+  <%= @wx_app.wx_id %>
+</p>
+
+<p>
+  <strong>App:</strong>
+  <%= @wx_app.app_id %>
+</p>
+
+<p>
+  <strong>Sceret:</strong>
+  <%= @wx_app.sceret %>
+</p>
+
+<p>
+  <strong>Token:</strong>
+  <%= @wx_app.token %>
+</p>
+
+<%= link_to 'Edit', edit_wx_app_path(@wx_app) %> |
+<%= link_to 'Back', wx_apps_path %>

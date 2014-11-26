@@ -1,0 +1,2 @@
+module Wx::MessagesHelper
+end

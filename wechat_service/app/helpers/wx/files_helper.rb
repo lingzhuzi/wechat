@@ -1,0 +1,2 @@
+module Wx::FilesHelper
+end

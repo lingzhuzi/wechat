@@ -1,0 +1,41 @@
+<%= form_for(@wx_user) do |f| %>
+  <% if @wx_user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@wx_user.errors.count, "error") %> prohibited this wx_user from being saved:</h2>
+
+      <ul>
+      <% @wx_user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nick_name %><br>
+    <%= f.text_field :nick_name %>
+  </div>
+  <div class="field">
+    <%= f.label :remark_name %><br>
+    <%= f.text_field :remark_name %>
+  </div>
+  <div class="field">
+    <%= f.label :open_id %><br>
+    <%= f.text_field :open_id %>
+  </div>
+  <div class="field">
+    <%= f.label :app_id %><br>
+    <%= f.text_field :app_id %>
+  </div>
+  <div class="field">
+    <%= f.label :avatar_id %><br>
+    <%= f.text_field :avatar_id %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
