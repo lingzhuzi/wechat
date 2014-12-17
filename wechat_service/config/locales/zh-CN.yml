@@ -1,0 +1,32 @@
+zh-CN:
+
+  activerecord:
+    attributes:
+      wx/user:
+        name: "帐号"
+        password: "密码"
+        password_confirmation: ""
+        question: "忘记密码问题"
+        answer: "忘记密码答案"
+        wx_id: '公众号原始ID'
+        app_id: 'APP ID'
+        secret: 'APP Secret'
+
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "不能为空"
+              taken: "已被注册"
+            password:
+              blank: "不能为空"
+              too_short: "最短%{count}个字符"
+              too_long:  "最长%{count}个字符"
+            password_confirmation:
+              blank: "重置密码不能为空"
+              confirmation: "两次密码输入不一致，请重新输入"
+            question:
+              blank: "不能为空"
+            answer:
+              blank: "不能为空"

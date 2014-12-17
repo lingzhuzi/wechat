@@ -1,0 +1,86 @@
+<h1>Listing wx_users and messages</h1>
+<input id="app_id" type="hidden" value="<%= params[:app_id] %>">
+<ul class="users">
+  <% @wx_users.each do |user| %>
+    <li class="user-item"><a href="javascript: void(0);"><%= user.open_id %></a></li>
+  <% end %>
+</ul>
+
+<ul class="messages">
+  <div class="content"></div>
+  <div class="sender">
+    <input class="message-content">
+    <input class="user-open-id" type="hidden" value="">
+    <button class="send-message-btn">Submit</button>
+  </div>
+</ul>
+
+
+<style type="text/css">
+  .messages {display: none;}
+  .messages .left{color: red;}
+  .messages .right{color: blue;}
+</style>
+
+<script type="text/javascript">
+  $(function(){
+    $('ul.users').on('click', 'li.user-item>a', function(){
+      $('.messages').show();
+      var $messages = $('.messages>.content');
+      $messages.text('');
+
+      var user_open_id = $(this).text();
+      var data = {app_id: $('#app_id').val(), user_open_id: user_open_id};
+      $('.messages .user-open-id').val(user_open_id);
+      $.get('/messages/all', data, function(result){
+        var messages = result['messages'];
+        var code = result['code'];
+        if(code == 1){
+          $('.notice').text('success');
+          $.each(messages, function(_, msg){
+            var content = msg['content'];
+            var is_from_user = msg['from_user_name'] == user_open_id;
+            var $li = build_message_li(content, is_from_user);
+            $messages.append($li);
+          });
+        } else {
+          $('.notice').text('faild');
+        }
+      });
+
+      $('.messages').on('click', '.sender>.send-message-btn', function(){
+        var $self = $(this);
+        var $message = $self.siblings('.message-content');
+        var message = $message.val();
+        var user_open_id = $self.siblings('.user-open-id').val();
+        var data = {user_open_id: user_open_id, message: message, app_id: $('#app_id').val()};
+        $self.attr('disabled', 'disabled');
+        $message.attr('disabled', 'disabled');
+
+        $.post('/messages/send_message', data, function(result){
+          $self.removeAttr('disabled');
+          $message.removeAttr('disabled');
+
+          var code = result['code'];
+          if(code == 1){
+            $message.val('');
+            $('.notice').text('success');
+            var $li = build_message_li(message, false);
+            $('.messages>.content').append($li);
+          } else {
+            $('.notice').text('faild');
+          }
+        });
+      });
+
+      function build_message_li(message_content, is_from_user){
+        var style_class = is_from_user ? 'left' : 'right';
+        var $li = $('<li></li>');
+        $li.addClass(style_class);
+        $li.text(message_content);
+
+        return $li;
+      }
+    });
+  });
+</script>

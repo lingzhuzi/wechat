@@ -28,15 +28,16 @@ module Wx
         xml = xml.gsub(/webwx_msg_cli_ver_0x1<\/xml>$/, "</xml>")
         wx_message = Hash.from_xml(xml)
 
-        wx_message
+        wx_message['xml']
       end
 
       def media_message_type?(message_type)
         ['image', 'voice', 'video'].include?(message_type.to_s.downcase)
       end
 
-      def build_text_message(text_message)
+      def build_text_message(to_user_open_id, text_message)
         {
+          "touser" => to_user_open_id,
           "msgtype" => "text",
           "text" => {
             "content" => text_message

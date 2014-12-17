@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Key:</strong>
+  <%= @key_word.key %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @key_word.content %>
+</p>
+
+<p>
+  <strong>App:</strong>
+  <%= @key_word.app %>
+</p>
+
+<a href="/key_words/<%= @key_word.id %>/edit?app_id=<%= params[:app_id] %>">Edit</a>
+<a href="/key_words/?app_id=<%= params[:app_id] %>">Back</a>

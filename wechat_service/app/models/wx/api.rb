@@ -1,4 +1,5 @@
 # encoding: utf-8
+# require 'request.rb'
 
 module Wx
   class Api
@@ -15,7 +16,7 @@ module Wx
       def get_access_token(ewx_app, force=false)
         unless force
           access_token = ewx_app.access_token
-          updated_at   = ewx_app.access_token_updated_at
+          updated_at   = ewx_app.refreshed_at
           if access_token.present? && updated_at.present? && Time.now - updated_at <= 7000.seconds
             return access_token
           end
@@ -30,7 +31,7 @@ module Wx
         access_token = response['access_token']
 
         ewx_app.access_token            = access_token
-        ewx_app.access_token_updated_at = DateTime.now
+        ewx_app.refreshed_at = DateTime.now
         ewx_app.save
 
         return access_token
@@ -39,8 +40,7 @@ module Wx
       def send_message(wx_app, message)
         access_token = get_access_token(wx_app)
         url          = "#{SEND_MESSAGE_URL}?access_token=#{access_token}"
-        response     = post(url, message)
-        res_msg      = ActiveSupport::JSON.decode(response.body)
+        res_msg     = post(url, message)
 
         return res_msg
       end
@@ -81,7 +81,7 @@ module Wx
 
       def get_user_info(wx_app, user_open_id)
         params = {}
-        params["access_token"] = access_tokenget_access_token(wx_app)
+        params["access_token"] = get_access_token(wx_app)
         params["openid"]       = user_open_id
         params["lang"]         = 'zh_CN'
 
@@ -102,13 +102,15 @@ module Wx
       private
 
       def get(url, params)
-        response      = Request.get(url, params)
+        response      = Wx::Request.get(url, params)
         hash_response = ActiveSupport::JSON.decode(response.body)
         hash_response
       end
 
       def post(url, params)
-        response = Request.post(url, params)
+        Rails.logger.debug "--#{Time.now.to_f}"
+        response = Wx::Request.post(url, params)
+        Rails.logger.debug "--#{Time.now.to_f}"
         hash_response = ActiveSupport::JSON.decode(response.body)
         hash_response
       end

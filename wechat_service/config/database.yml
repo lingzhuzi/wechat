@@ -4,22 +4,49 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 #
-default: &default
-  adapter: sqlite3
+# default: &default
+#   adapter: mysql2
+#   encoding: utf8
+#   pool: 5
+#   timeout: 5000
+
+# development:
+#   <<: *default
+#   database: db/development.sqlite3
+
+# # Warning: The database defined as "test" will be erased and
+# # re-generated from your development database when you run "rake".
+# # Do not set this db to the same as development or production.
+# test:
+#   <<: *default
+#   database: db/test.sqlite3
+
+# production:
+#   <<: *default
+#   database: db/production.sqlite3
+
+
+# create application mysql user
+#   create user entos@localhost identified by 'From2010';
+
+cfg: &cfg
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
   pool: 5
-  timeout: 5000
+  port: 3306
+  username: root
+  password: root
+  host: localhost
 
 development:
-  <<: *default
-  database: db/development.sqlite3
+  <<: *cfg
+  database: wechat_development
 
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: db/test.sqlite3
+  <<: *cfg
+  database: wechat_test
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  <<: *cfg
+  database: wechat

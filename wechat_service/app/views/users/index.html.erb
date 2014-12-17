@@ -1,0 +1,35 @@
+<h1>Listing wx_users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nick name</th>
+      <th>Remark name</th>
+      <th>Open</th>
+      <th>App</th>
+      <th>Avatar</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wx_users.each do |wx_user| %>
+      <tr>
+        <td><%= wx_user.nick_name %></td>
+        <td><%= wx_user.remark_name %></td>
+        <td><%= wx_user.open_id %></td>
+        <td><%= wx_user.app %></td>
+        <td><%= wx_user.avatar %></td>
+        <td><%= wx_user.description %></td>
+        <td><%= link_to 'Show', wx_user %></td>
+        <td><%= link_to 'Edit', edit_wx_user_path(wx_user) %></td>
+        <td><%= link_to 'Destroy', wx_user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User', new_wx_user_path %>

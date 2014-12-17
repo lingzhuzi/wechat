@@ -1,10 +1,12 @@
 # encoding: utf-8
 class WxController < ApplicationController
+  skip_before_filter :authenticate_user!, only: [:index]
   before_filter :check_signature
+  protect_from_forgery except: :index
 
   def index
     wx_message = Wx::Common.get_wx_message(request)
-    Wx::Processor.deal(@wx_app, wx_message)
+    Wx::Processor.delay.deal(@wx_app, wx_message)
 
     render text: ''
   end
@@ -12,7 +14,7 @@ class WxController < ApplicationController
   private
 
   def check_signature
-    @wx_app = Wx::App.find(params[:id])
+    @wx_app = App.find(params[:id] || 1)
     text    = Wx::Common.check_signature(@wx_app, params)
     if text.present?
       render :text => text
